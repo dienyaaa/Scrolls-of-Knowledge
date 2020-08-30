@@ -10,6 +10,7 @@ ScriptsOnlyBuild:
     - ScrollDate
     - ScrollHolderTag
     - ScrollTag
+    - Timer
     - TriggerZoneController
     Unity.2D.Animation.Editor.dll:
     - UnityEditor.U2D.Animation.BoneGizmo
@@ -46,7 +47,6 @@ ScriptsOnlyBuild:
     - UnityEngine.Rendering.UI.DebugUIHandlerVector4
     - UnityEngine.Rendering.UI.UIFoldout
     Unity.RenderPipelines.Universal.Editor.dll:
-    - UnityEditor.Experimental.Rendering.Universal.Path2D.ScriptablePathInspector
     - UnityEditor.Rendering.Universal.UniversalProjectSettings
     Unity.RenderPipelines.Universal.Runtime.dll:
     - UnityEngine.Experimental.Rendering.Universal.Light2D
@@ -225,17 +225,19 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 15972}
     - Class: 114
-      Script: {instanceID: 16016}
+      Script: {instanceID: 16014}
     - Class: 114
-      Script: {instanceID: 16042}
+      Script: {instanceID: 16018}
     - Class: 114
       Script: {instanceID: 16044}
     - Class: 114
-      Script: {instanceID: 16108}
+      Script: {instanceID: 16046}
     - Class: 114
-      Script: {instanceID: 16188}
+      Script: {instanceID: 16110}
     - Class: 114
-      Script: {instanceID: 16194}
+      Script: {instanceID: 16190}
+    - Class: 114
+      Script: {instanceID: 16196}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1129,6 +1131,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.RenderPipelines.Core.Runtime.dll
     namespaceName: UnityEngine.Rendering
     className: FreeCamera
+  - hash:
+      serializedVersion: 2
+      Hash: b4ca895c09197edf7aa1a1c93398b448
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Timer
   - hash:
       serializedVersion: 2
       Hash: 748dd2a2a28da4e618912da5ac45684b

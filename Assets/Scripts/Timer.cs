@@ -1,23 +1,30 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
-    public float timeStart = 600f;
-    public Text timer;
+public float timer = 600;
+public Text timeText;
+
+    private DateTime timerEnd;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        timer.text = timeStart.ToString();
+        timerEnd = DateTime.Now.AddSeconds(timer);
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        timeStart -= Time.deltaTime;
-        timer.text = Mathf.Round(timeStart).ToString();
+        TimeSpan delta = timerEnd - DateTime.Now;
+        timeText.text = delta.Minutes.ToString("00") + ":" + delta.Seconds.ToString("00");
+        if (delta.TotalSeconds <= 0)
+        {
+            Debug.Log("The END");
+        }
     }
 }
