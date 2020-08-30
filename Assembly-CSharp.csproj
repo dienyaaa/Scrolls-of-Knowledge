@@ -36,9 +36,9 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\BackgroundHelper.cs" />
      <Compile Include="Assets\Bandits - Pixel Art\Demo\Bandit.cs" />
      <Compile Include="Assets\Bandits - Pixel Art\Demo\Sensor_Bandit.cs" />
+     <Compile Include="Assets\Scripts\BackgroundHelper.cs" />
      <Compile Include="Assets\Scripts\CamMove.cs" />
      <Compile Include="Assets\Scripts\DieSpace.cs" />
      <Compile Include="Assets\Scripts\OpenScrolls.cs" />
@@ -49,6 +49,7 @@
      <Compile Include="Assets\Scripts\ScrollDate.cs" />
      <Compile Include="Assets\Scripts\ScrollHolderTag.cs" />
      <Compile Include="Assets\Scripts\ScrollTag.cs" />
+     <Compile Include="Assets\Scripts\Timer.cs" />
      <Compile Include="Assets\Scripts\TriggerZoneController.cs" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
