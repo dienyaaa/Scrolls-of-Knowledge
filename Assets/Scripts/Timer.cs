@@ -3,11 +3,12 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Timer : MonoBehaviour
 {
-public float timer = 600;
-public Text timeText;
+    public float timer = 1800;
+    public Text timeText;
 
     private DateTime timerEnd;
 
@@ -20,11 +21,20 @@ public Text timeText;
     // Update is called once per frame
     private void Update()
     {
-        TimeSpan delta = timerEnd - DateTime.Now;
-        timeText.text = delta.Minutes.ToString("00") + ":" + delta.Seconds.ToString("00");
-        if (delta.TotalSeconds <= 0)
+        if (GameState.IsPaused)
+            return;
+        timer -= Time.deltaTime;
+        timeText.text = Format((int)timer);
+        if (timer <= 0)
         {
-            Debug.Log("The END");
+            SceneManager.LoadScene(0);
         }
+    }
+    private string Format(int seconds)
+    {
+        var minutes = seconds/60;
+        var newSeconds = seconds-minutes*60;
+        var stringSeconds = newSeconds>9?newSeconds.ToString():$"0{newSeconds}";
+        return $"{minutes}:{stringSeconds}";
     }
 }

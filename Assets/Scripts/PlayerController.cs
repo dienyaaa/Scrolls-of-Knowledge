@@ -1,5 +1,6 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,9 +10,7 @@ public class PlayerController : MonoBehaviour
     private float moveInput;
     private Rigidbody2D rb;
     Animator anim;
-
     private bool facingRight = true;
-
     private bool isGrounded;
     public Transform groundCheck;
     public float checkRadius;
@@ -26,7 +25,7 @@ public class PlayerController : MonoBehaviour
     public Button ok;
     public QuestionManController state;
     private ScrollController scrollController;
-
+    public GameObject respawn;
 
     void Start()
     {
@@ -38,6 +37,10 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        moveInput = Input.GetAxis("Horizontal");
+        if (GameState.IsPaused){
+            moveInput = 0;
+        }
         if (Input.GetAxis("Horizontal") == 0)
         {
             anim.SetInteger("sost", 1);
@@ -46,14 +49,10 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetInteger("sost", 2);
         }
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
+        rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
 
-
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position,checkRadius,whatIsGround);
-
-        moveInput = Input.GetAxis("Horizontal");
-        rb.velocity = new Vector2(moveInput * speed, rb.velocity.y); 
-
-        if (facingRight == false && moveInput >0)
+        if (facingRight == false && moveInput > 0)
         {
             Flip();
         }
@@ -71,9 +70,10 @@ public class PlayerController : MonoBehaviour
         transform.localScale = Scaler;
     }
 
-    
     void Update()
     {
+        if (GameState.IsPaused)
+            return;
         if (isGrounded == true)
         {
             extraJumps = extraJumpValue;
@@ -91,23 +91,28 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D (Collider2D scroll)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        var  scrollTag = scroll.GetComponent<ScrollTag>();
+        var scrollTag = other.GetComponent<ScrollTag>();
         if (scrollTag != null)
         {
             scrollController.TakeScroll(scrollTag.scroll);
             scrollButton.gameObject.SetActive(true);
             Destroy(scrollTag.gameObject);
         }
-        if (scroll.gameObject.tag == "triggerZone")
+        if (other.gameObject.tag == "triggerZone")
         {
-            state = scroll.gameObject.GetComponent<TriggerZoneController>().GetMainController();
+            state = other.gameObject.GetComponent<TriggerZoneController>().GetMainController();
             SetInputState(true);
+        }
+        if (other.tag == "checkpoint")
+        {
+            respawn.transform.position = other.transform.position;
+            Destroy(other.gameObject);
         }
     }
 
-    void OnTriggerExit2D (Collider2D scroll)
+    void OnTriggerExit2D(Collider2D scroll)
     {
         if (scroll.gameObject.tag == "triggerZone")
         {
@@ -115,12 +120,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void CheckAnswer(){
-        if(float.TryParse(inputAnswer.text, out var myFloatAnswer) && state != null)
+    public void CheckAnswer()
+    {
+        if (float.TryParse(inputAnswer.text, out var myFloatAnswer) && state != null)
         {
             var isResolved = state.Resolve(myFloatAnswer);
             inputAnswer.text = string.Empty;
-            if(isResolved){
+            if (isResolved)
+            {
                 SetInputState(false);
                 state = null;
             }
@@ -128,7 +135,7 @@ public class PlayerController : MonoBehaviour
     }
     private void SetInputState(bool active)
     {
-            inputAnswer.gameObject.SetActive(active);
-            ok.gameObject.SetActive(active);
+        inputAnswer.gameObject.SetActive(active);
+        ok.gameObject.SetActive(active);
     }
 }

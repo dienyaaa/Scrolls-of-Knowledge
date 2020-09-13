@@ -9,6 +9,7 @@ TagManager:
   - triggerZone
   - temp
   - scrollThird
+  - checkpoint
   layers:
   - Default
   - TransparentFX

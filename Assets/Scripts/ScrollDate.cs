@@ -4,5 +4,5 @@ using UnityEngine.UI;
 [CreateAssetMenu(fileName = "Scroll", menuName = "Scrolls/NewScroll")]
 public class ScrollDate : ScriptableObject
 {
-    public GameObject scroll;
+    public Sprite scroll;
 }

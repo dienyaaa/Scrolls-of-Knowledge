@@ -2,25 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+ 
 public class ScrollController : MonoBehaviour
 {
     public int currentIndex = -1;
-    [SerializeField]
-    private GameObject scrollHolder;
-    [SerializeField]
-    private GameObject scrollCloser;
 
     [SerializeField]
+    private GameObject scrollHolder;
+
+    [SerializeField]
+    private GameObject scrollCloser;
+ 
+    [SerializeField]
     private GameObject nextScroll;
+ 
+    [SerializeField]
+    private Image scrollImage;
 
     [SerializeField]
     private GameObject previuosScroll;
-    private List<GameObject> scrolls;
-
+    
+    private List<Sprite> scrolls;
+ 
     void Awake(){
-        scrolls = new List<GameObject>();
+        scrolls = new List<Sprite>();
+        SetActiveUI(false);
     }
+ 
+
     public void OpenScroll(bool isButton = false){
         if(scrollHolder.activeSelf && isButton){
             CloseScroll();
@@ -28,13 +37,7 @@ public class ScrollController : MonoBehaviour
         }
         if(isValidIndex){
             SetActiveUI(true);
-            var children = scrollHolder.gameObject.GetComponentsInChildren<Transform>();
-            if(children.Length > 1)
-                foreach(var child in children){
-                    if(child.GetComponent<ScrollHolderTag>() != scrollHolder.GetComponent<ScrollHolderTag>())
-                        Destroy(child.gameObject);
-                }
-            Instantiate(scrolls[currentIndex], scrollHolder.transform);
+            scrollImage.sprite = scrolls[currentIndex];
         }
     }
       
@@ -43,7 +46,7 @@ public class ScrollController : MonoBehaviour
             SetActiveUI(false);
         }
     }
-
+ 
     public void TakeScroll(ScrollDate scroll){
         if(scroll == null) return;
         currentIndex++;
@@ -52,7 +55,7 @@ public class ScrollController : MonoBehaviour
             OpenScroll();
         }
     }
-
+ 
     public void GoNextScroll(){
         if(isValidIndex){
             if(currentIndex < scrolls.Count - 1)
@@ -62,7 +65,7 @@ public class ScrollController : MonoBehaviour
             }
         }
     }
-
+ 
     public void GoPreviousScroll(){
         if(isValidIndex){
             if(currentIndex > 0)
@@ -72,13 +75,13 @@ public class ScrollController : MonoBehaviour
             }
         }
     }
-
+ 
     private void SetActiveUI(bool isActive){
         scrollHolder.SetActive(isActive);
         scrollCloser.SetActive(isActive);
         nextScroll.SetActive(isActive && currentIndex < scrolls.Count - 1);
         previuosScroll.SetActive(isActive && currentIndex > 0);
     }
-
+ 
     private bool isValidIndex => currentIndex > -1 && currentIndex < scrolls.Count;
 }

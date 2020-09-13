@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BackgroundHelper : MonoBehaviour {
+public class BackgroundHelper : MonoBehaviour
+{
 
     public float speed = 0; //эта публичная переменная отобразится в инспекторе, там же мы ее можем и менять. Это очень удобно, чтобы настроить скорость разным слоям картинки
 
@@ -11,28 +12,33 @@ public class BackgroundHelper : MonoBehaviour {
 
     private RawImage image; //создаем объект нашей картинки
 
-      
 
-       void Start () {
+
+    void Start()
+    {
 
         image = GetComponent<RawImage>();//в старте получаем ссылку на картинку
 
-        }    
+    }
 
-      
 
-        void Update () {
 
+    void Update()
+    {
         //в апдейте прописываем как, с какой скоростью и куда мы будем двигать нашу картинку
-
-          pos += speed;
-
+        if (GameState.IsPaused)
+            return;
+        var dir = Input.GetAxis("Horizontal");
+        pos += speed * dir;
+        if (dir != 0)
+        {
             if (pos > 1.0F)
-
                 pos -= 1.0F;
+            if (pos < -1.0F)
+                pos += 1.0F;
+        }
+        image.uvRect = new Rect(pos, 0, 1, 1);
 
-            image.uvRect = new Rect(pos, 0, 1, 1);
-
-       }
+    }
 
 }
