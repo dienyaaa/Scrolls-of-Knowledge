@@ -122,7 +122,7 @@ public class PlayerController : MonoBehaviour
 
     public void CheckAnswer()
     {
-        if (float.TryParse(inputAnswer.text, out var myFloatAnswer) && state != null)
+        if (float.TryParse(inputAnswer.text.Replace('.',','), out var myFloatAnswer) && state != null)
         {
             var isResolved = state.Resolve(myFloatAnswer);
             inputAnswer.text = string.Empty;

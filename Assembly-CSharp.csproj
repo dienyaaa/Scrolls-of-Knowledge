@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scripts\ScrollTag.cs" />
      <Compile Include="Assets\Scripts\Timer.cs" />
      <Compile Include="Assets\Scripts\TriggerZoneController.cs" />
+     <Compile Include="Assets\thend.cs" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\Sprites\1\license.txt" />
